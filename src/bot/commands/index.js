@@ -6,9 +6,12 @@ export async function handleCommands(interaction){
     if(interaction.commandName==="join"){
         const channel=await interaction.guild.channels.fetch(interaction.options.get("channel")?.value);
         if(!channel){
+            interaction.reply({content:"ボイスチャンネルが読み込めませんでした"})
         }else if(channel.type!=ChannelType.GuildVoice){
-
+            interaction.reply({content:"ボイスチャンネルを指定してください"})
         }else if(!channel.joinable){
+            interaction.reply({content:"ボイスチャンネルに参加できませんでした"})
+        }else{
             joinVoiceChannel({
                 channelId:channel.id,
                 guildId:channel.guild.id,
@@ -16,7 +19,7 @@ export async function handleCommands(interaction){
                 selfDeaf:false,
                 selfMute:false
             });
-            interaction.replay({content:"ボイスチャンネルに参加しました"});
+            interaction.reply({content:"ボイスチャンネルに参加しました"});
         }
 
     }
