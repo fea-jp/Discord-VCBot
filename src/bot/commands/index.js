@@ -16,6 +16,7 @@ export async function handleCommands(interaction){
                 selfDeaf:false,
                 selfMute:false
             });
+            interaction.replay({content:"ボイスチャンネルに参加しました"});
         }
 
     }
