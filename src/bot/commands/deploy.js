@@ -1,4 +1,4 @@
-import { REST,Routes,SlashCommandBuilder } from "discord.js";
+import { REST,Routes,SlashCommandBuilder,ChannelType } from "discord.js";
 
 const commands=[
     new SlashCommandBuilder()
@@ -8,6 +8,7 @@ const commands=[
         option
         .setName("channel")
         .setDescription("参加するチャンネルを指定")
+        .addChannelTypes(ChannelType.GuildVoice)
         .setRequired(true)
     )
 ];
