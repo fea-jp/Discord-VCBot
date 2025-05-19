@@ -10,7 +10,10 @@ const commands=[
         .setDescription("参加するチャンネルを指定")
         .addChannelTypes(ChannelType.GuildVoice)
         .setRequired(true)
-    )
+    ),
+    new SlashCommandBuilder()
+    .setName("leave")
+    .setDescription("ボイスチャンネルとの接続を切断します")
 ];
 
 export async function deployCommands(c){

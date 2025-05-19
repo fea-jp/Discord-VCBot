@@ -1,5 +1,7 @@
-import { ChannelType, Colors} from "discord.js";
+import { ChannelType, Colors, embedLength} from "discord.js";
 import { joinVoiceChannel } from "@discordjs/voice";
+
+const voiceChannels=new Map();
 
 export async function handleCommands(interaction){
     if(!interaction.isChatInputCommand())return;
@@ -30,13 +32,14 @@ export async function handleCommands(interaction){
                 }]
             })
         }else{
-            joinVoiceChannel({
+            const connection=joinVoiceChannel({
                 channelId:channel.id,
                 guildId:channel.guild.id,
                 adapterCreator:channel.guild.voiceAdapterCreator,
                 selfDeaf:false,
                 selfMute:false
             });
+            voiceChannels.set(interaction.guildId,{connection});
             await interaction.reply({
                 embeds:[{
                     title:"ボイスチャンネルに参加しました",
@@ -45,6 +48,24 @@ export async function handleCommands(interaction){
                 }]
             });
         }
-
+    }else if(interaction.commandName==="leave"){
+        if(!voiceChannels.has(interaction.guildId)){
+            await interaction.reply({
+                embeds:[{
+                    title:"エラーが発生しました。",
+                    description:"ボイスチャンネルに参加していません。",
+                    color:Colors.Red
+                }]
+            })
+        }else{
+            voiceChannels.get(interaction.guildId).connection.destroy();
+            voiceChannels.delete(interaction.guildId);
+            await interaction.reply({
+                embeds:[{
+                    title:"ボイスチャンネルとの接続を切断しました。",
+                    color:Colors.Green
+                }]
+            })
+        }
     }
 }
