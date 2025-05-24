@@ -13,7 +13,16 @@ const commands=[
     ),
     new SlashCommandBuilder()
     .setName("leave")
-    .setDescription("ボイスチャンネルとの接続を切断します")
+    .setDescription("ボイスチャンネルとの接続を切断します"),
+    new SlashCommandBuilder()
+    .setName("music")
+    .setDescription("音楽を再生します")
+    .addStringOption(option=>
+        option
+        .setName("input")
+        .setDescription("URLまたは曲名を入力")
+        .setRequired(true)
+    )
 ];
 
 export async function deployCommands(c){

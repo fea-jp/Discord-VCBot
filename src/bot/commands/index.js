@@ -1,8 +1,12 @@
+import path from 'node:path'
 import { ChannelType, Colors, embedLength} from "discord.js";
 import { joinVoiceChannel } from "@discordjs/voice";
+import * as vosk from "vosk"
 
 const commandHadler=new Map();
 const voiceChannels=new Map();
+
+const voskModel=new vosk.Model(path.join(__dirname,"vosk_models","vosk-model-ja-0.22"))
 
 commandHadler.set("join",async interaction=>{
     const channel=await interaction.guild.channels.fetch(interaction.options.get("channel")?.value);
