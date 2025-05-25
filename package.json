@@ -1,0 +1,25 @@
+{
+  "name": "discord-vcbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "dependencies": {
+    "@discordjs/voice": "^0.18.0",
+    "discord.js": "^14.19.3",
+    "dotenv": "^16.5.0"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fea-jp/Discord-VCBot.git"
+  },
+  "author": "fea-jp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fea-jp/Discord-VCBot/issues"
+  },
+  "homepage": "https://github.com/fea-jp/Discord-VCBot#readme"
+}
