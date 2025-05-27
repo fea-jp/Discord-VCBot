@@ -1,5 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js"
 import { CommandManager } from "./commands/manager.js";
+import { deployCOmmands } from "./commandDeploy.js";
 
 export class VCBot{
     constructor(token){
@@ -12,9 +13,12 @@ export class VCBot{
         });
         if(token)this.token=token;
         this.commandManager=CommandManager.instance;
+        console.log("VCBot initialized.");
     }
-    run(token){
+    async run(token){
         if(!token&&!this.token)throw new Error("Error: Discord token is required.");
-        this.client.login(token||this.token);
+        await this.client.login(token||this.token);
+        await deployCOmmands({client:this.client, token:this.token});
+        console.log("VCBot is running.")
     }
 }
