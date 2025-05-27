@@ -11,5 +11,6 @@ export default {
         .setRequired(true)
     ),
     run:async interaction=>{
+        interaction.reply("Testing join command.")
     }
 }

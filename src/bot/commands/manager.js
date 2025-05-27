@@ -1,3 +1,4 @@
+import { Colors } from "discord.js";
 import fs from "fs"
 import path from "path"
 import { fileURLToPath } from "url";
@@ -50,11 +51,39 @@ export class CommandManager{
         });
     }
 
-    getCommand(name){
-        return this.commands.get(name);
+    async handleCommand(interaction){
+        if(!this.ready)throw new Error("Error: Commands are not ready yet.");
+        const commandName=interaction.commandName;
+        if(!this.hasCommand(commandName)){
+            await interaction.reply({
+                embeds:[{
+                    title:"Error",
+                    description:"Command not found.",
+                    color:Colors.Red
+                }]
+            })
+        }
+        const command=this.commands.get(commandName);
+        if(!command)throw new Error("Error: Command not found in the manager.");
+        try{
+            await command.run(interaction)
+        }catch(e){
+            console.error("Error executing command: ", commandName, e);
+            await interaction.reply({
+                embeds:[{
+                    title:"Error",
+                    description:"An error occurred while executing the command.",
+                    color:Colors.Red
+                }]
+            });
+        }
     }
 
     getCommandsData(){
         return Array.from(this.commands.values()).map(command=>command.data);
+    }
+
+    hasCommand(name){
+        return this.commands.has(name)
     }
 }

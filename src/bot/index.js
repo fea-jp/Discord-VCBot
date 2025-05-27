@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits } from "discord.js"
+import { Client, GatewayIntentBits, Events } from "discord.js"
 import { CommandManager } from "./commands/manager.js";
 import { deployCOmmands } from "./commandDeploy.js";
 
@@ -13,6 +13,7 @@ export class VCBot{
         });
         if(token)this.token=token;
         this.commandManager=CommandManager.instance;
+        this.client.on(Events.InteractionCreate, this.commandManager.handleCommand.bind(this.commandManager));
         console.log("VCBot initialized.");
     }
     async run(token){
